@@ -11,7 +11,7 @@ interface SendResult {
 }
 
 export default function MockTiveSenderPage() {
-  const [apiUrl, setApiUrl] = useState('http://localhost:3000/api/webhook/tive');
+  const [apiUrl, setApiUrl] = useState('/api/webhook/tive');
   const [apiKey, setApiKey] = useState('');
   const [payload, setPayload] = useState<string>('');
   const [results, setResults] = useState<SendResult[]>([]);
