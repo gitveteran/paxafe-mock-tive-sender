@@ -12,7 +12,18 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
   try {
-    const target = process.env.TIVE_WEBHOOK_URL ?? 'http://localhost:3000/api/webhook/tive';
+    const target = process.env.TIVE_WEBHOOK_URL;
+
+    if (!target) {
+      return new Response(JSON.stringify({ error: 'TIVE_WEBHOOK_URL is not set on the server. Set the environment variable to the upstream webhook URL.' }), {
+        status: 500,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+
+    // Optional: log the resolved target on server-side for debugging
+    // Note: do not expose this to the browser in production logs
+    // console.info(`Forwarding Tive webhook to: ${target}`);
 
     // Read the incoming body
     const textBody = await request.text();
